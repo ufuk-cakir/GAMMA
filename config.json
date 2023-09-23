@@ -1,0 +1,34 @@
+{
+    "simulation": "IllustrisTNG",
+    "particle_types": ["stars"],
+    "galaxy_parameters": ["mass", "halo_id"],
+    "img_res": 64,
+    "plot_factor": 5,
+    "path": "output_path",
+    "halo_ids": null,
+    "dim": null,
+    "log_M_min": 9.5,
+    "log_M_max": 13.0,
+    "fields": 
+                {
+                    "Masses":
+                            {   "mass_weighted":false,
+                                "normed":false
+                            },
+                    "GFM_Metallicity":
+                            {   "mass_weighted":true,
+                                "normed":false
+                            },
+                    "GFM_StellarFormationTime":
+                            {   "mass_weighted":true,
+                                "normed":false
+                            }
+                },
+    "GalaxyArgs": 
+                {"base_path": "/data/TNG100/TNG100-1/output/",
+                "snapshot":99,
+                "particle_type":"stars"        
+                }
+
+}
+
