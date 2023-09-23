@@ -21,7 +21,7 @@ The [config.json](config.json) file contains all the settings nedded to run the 
 
 ## Generation
 To generate the dataset run
-`source setup.sh`
+`source generate_data.sh`
 
 
 
