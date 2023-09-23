@@ -14,9 +14,11 @@ The dataset offers detailed 2D maps and 3D cubes of 11 960 galaxies,capturing es
 ## Installation
 
 The dataset loads galaxies from the [IllustrisTNG](https://www.tng-project.org/) suite. For thet, the respective python package should be installed:
-`$ cd ~
+```
+$ cd ~
 $ git clone https://github.com/illustristng/illustris_python.git
-$ pip install illustris_python/`
+$ pip install illustris_python/
+```
 
 For installation, run  
 `source setup.sh`
@@ -44,6 +46,12 @@ The required fields are:
 ## Generation
 To generate the dataset run
 `source generate_data.sh`
+
+
+## Data Structure
+
+The data will be stored in a HDF5 File in the following way:
+
 
 
 
