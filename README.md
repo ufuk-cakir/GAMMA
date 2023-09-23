@@ -52,7 +52,7 @@ To generate the dataset run
 
 The data will be stored in a HDF5 File in the following way:
 
-![HDF5 File Structure](hdf5_structure.pdf)
+![HDF5 File Structure](image.png)
 
 
 
