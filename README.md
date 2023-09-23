@@ -8,22 +8,25 @@
 This project, developed by Ufuk Çakir, introduces the code  to generate the GAMMA (Galactic Attributes of Mass, Metallicity, and Age) dataset, a comprehensive collection of galaxy data tailored for Machine Learning applications. 
 The dataset offers detailed 2D maps and 3D cubes of 11 960 galaxies,capturing essential attributes: stellar age, metallicity, and mass. Ideal for feature extraction, clustering, and regression tasks, GAMMA offers a unique lens for exploring galac-tic structures through computational methods and is a bridge between astrophysical simulations and the field of scientific machine learning (ML)
 
+
+The GAMMA dataset can be downloaded on Zenodo.
+
 *Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
 
 ## Installation
 
-The dataset loads galaxies from the [IllustrisTNG](https://www.tng-project.org/) suite. For thet, the respective python package should be installed:
+The code loads galaxies from the [IllustrisTNG](https://www.tng-project.org/) suite. For thet, the respective python package should be installed:
 ```
 $ cd ~
 $ git clone https://github.com/illustristng/illustris_python.git
 $ pip install illustris_python/
 ```
-
-For installation, run  
-`source setup.sh`
-
 Check the [Starting Guide](https://www.tng-project.org/data/docs/scripts/) on the TNG webpage for more information.
+
+
+For installation of the code, run  
+`source setup.sh`
 
 ## Configuration
 
@@ -47,6 +50,8 @@ The required fields are:
 To generate the dataset run
 `source generate_data.sh`
 
+This will select galaxies using the [select_galaxies Class](src/gamma/select_galaxies.py) and save the halo ids in a numpy array.
+Finnaly the code runs the [generate.py](src/gamma/generate.py) code to generate the dataset.
 
 ## Data Structure
 
