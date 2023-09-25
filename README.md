@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/695622710.svg)](https://zenodo.org/badge/latestdoi/695622710)
 # Galactic Attributes of Mass, Metallicity, and Age
 
 This project, developed by Ufuk Çakir and Tobias Buck, introduces the code to generate the GAMMA (Galactic Attributes of Mass, Metallicity, and Age) dataset, a comprehensive collection of galaxy data tailored for Machine Learning applications. 
