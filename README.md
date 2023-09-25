@@ -9,7 +9,7 @@ This project, developed by Ufuk Çakir, introduces the code  to generate the GAM
 The dataset offers detailed 2D maps and 3D cubes of 11 960 galaxies,capturing essential attributes: stellar age, metallicity, and mass. Ideal for feature extraction, clustering, and regression tasks, GAMMA offers a unique lens for exploring galac-tic structures through computational methods and is a bridge between astrophysical simulations and the field of scientific machine learning (ML)
 
 
-The GAMMA dataset can be downloaded on Zenodo.
+The GAMMA dataset can be downloaded on [Zenodo](https://zenodo.org/record/8375344).
 
 *Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
@@ -50,8 +50,8 @@ The required fields are:
 To generate the dataset run
 `source generate_data.sh`
 
-This will select galaxies using the [select_galaxies Class](src/gamma/select_galaxies.py) and save the halo ids in a numpy array.
-Finnaly the code runs the [generate.py](src/gamma/generate.py) code to generate the dataset.
+This will select galaxies using the [select_galaxies](src/gamma/select_galaxies.py) function and save the halo ids in a numpy array.
+Finaly the code runs the [generate.py](src/gamma/generate.py) code to generate the dataset from the selected galaxies.
 
 ## Data Structure
 
@@ -60,5 +60,29 @@ The data will be stored in a HDF5 File in the following way:
 ![HDF5 File Structure](image.png)
 
 
+## Load Data
+You can use the `Gamma`class define in [load.py](src/gamma/load.py):
+
+```python
+>>> from gamma.load import Gamma
+>>> path = "GAMMA.hdf5"
+
+data = Gamma(path)
+```
+
+To get specific data from the Attributes group you can simply call
+
+```python
+>>> data = Gamma("data.hdf5")
+>>> data.get_attribute("mass")  # Get the mass of all galaxies in the dataset
+>>> data.get_attribute("mass", 10)  # Get the mass of the 10th galaxy in the dataset
+```
+
+To get the images you can use:
+
+```python
+>>> image = data.get_image("stars", "Masses", 10) # Get the stars masses image of the 10th galaxy in the dataset
+>>> all_images = data.get_image("stars", "Masses") # Get all stars masses images in the dataset
+```
 
 
