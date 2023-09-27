@@ -64,7 +64,7 @@ Finaly the code runs the [generate.py](src/gamma/generate.py) code to generate t
 
 The data will be stored in a HDF5 File in the following way:
 
-![HDF5 File Structure](image.png)
+![HDF5 File Structure](hdf5_structure.png)
 
 
 ## Loading Data <a name="loading-data"></a>
