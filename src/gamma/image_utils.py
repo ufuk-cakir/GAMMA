@@ -239,6 +239,8 @@ def moment_of_intertia_tensor(coordinates, particle_masses, rHalf, subhalo_pos):
     numpy.array
         The moment of inertia tensor of the galaxy.
     '''
+    
+    # Source: https://www.tng-project.org/data/forum/topic/223/subhalo-face-on-vector-values/
 
     rad = radial_distance(coords = coordinates, center = subhalo_pos) 
     wGas = np.where((rad <= 2.0*rHalf))[0] 
