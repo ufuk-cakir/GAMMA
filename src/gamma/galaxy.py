@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from .image_utils import image2D, image3D, norm, face_on_rotation, horizontal_rotation
 
-def str_to_class(classname):
+def _str_to_class(classname):
     """Converts a string to a class."""
     # Check if the class is defined in the simulations.py file
     if hasattr(sys.modules[__name__], classname):
@@ -57,7 +57,7 @@ class Galaxy:
         self.rotated_flag = False
 
         # Load the defined Galaxy Class
-        self.galaxy_object = str_to_class(self.simulation)(**kwargs)
+        self.galaxy_object = _str_to_class(self.simulation)(**kwargs)
         # Set default Atributes for the image rendering
         self.plot_factor = 10
         self.res = 64
