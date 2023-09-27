@@ -4,7 +4,7 @@ import json
 
 
 # At this point only illustris galaxies are supported
-from simulations import select_illustris_galaxies
+from .simulations import select_illustris_galaxies
 
 
 galaxy_selection = select_illustris_galaxies
