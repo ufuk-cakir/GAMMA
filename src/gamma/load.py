@@ -194,6 +194,7 @@ class Gamma():
         Print the structure of the HDF5 file.
 
         This method is useful to check the structure of the HDF5 file and the available attributes and images.
+        
         Examples:
         ---------
         >>> data = Gamma("data.hdf5")
