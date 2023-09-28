@@ -14,12 +14,11 @@ The dataset offers detailed 2D maps and 3D cubes of 11 727 galaxies, capturing e
 4. [Generation](#generation)
 5. [Data Structure](#data-structure)
 6. [Loading Data](#loading-data)
+7. [PCA Benchmark](#pca-benchmark)
 
 ## Download Dataset <a name="download-dataset"></a>
 
 The GAMMA dataset can be downloaded on [Zenodo](https://zenodo.org/record/8375344).
-
-*Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
 ## Installation <a name="installation"></a>
 
@@ -91,7 +90,7 @@ To get the images you can use:
 >>> image = data.get_image("stars", "Masses", 10) # Get the stars masses image of the 10th galaxy in the dataset
 >>> all_images = data.get_image("stars", "Masses") # Get all stars masses images in the dataset
 ```
-## PCA Benchmark
+## PCA Benchmark<a name="pca-benchmark"></a>
 ```python
 >>> from gamma.load import Gamma
 >>> path = "GAMMA.hdf5"
