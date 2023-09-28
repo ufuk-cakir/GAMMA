@@ -91,5 +91,23 @@ To get the images you can use:
 >>> image = data.get_image("stars", "Masses", 10) # Get the stars masses image of the 10th galaxy in the dataset
 >>> all_images = data.get_image("stars", "Masses") # Get all stars masses images in the dataset
 ```
+## PCA Benchmark
+```python
+>>> from gamma.load import Gamma
+>>> path = "GAMMA.hdf5"
+>>> data = Gamma(path)
+>>> from gamma.model import mPCA
+>>> model = mPCA(data, dim=2) # Initialize PCA model for two dimensional data
+# Creating datamatrix with the following fields:
+ ===============================================
+ Particle type:  stars
+ Fields:  ['GFM_Metallicity', 'GFM_StellarFormationTime', 'Masses']
+ Dimension:  dim2
+ Default arguments are used for the fields that are not specified in the norm_function_kwargs
+ ===============================================
+ Created datamatrix with shape:  (11727, 12288) 
+>>> model.fit(n_components = 60, show_results = True)
+```
 
+data 
 
