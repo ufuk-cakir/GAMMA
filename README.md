@@ -98,7 +98,7 @@ To get the images you can use:
 >>> data = Gamma(path)
 >>> from gamma.model import mPCA
 >>> model = mPCA(data, dim=2) # Initialize PCA model for two dimensional data
-# Creating datamatrix with the following fields:
+Creating datamatrix with the following fields:
  ===============================================
  Particle type:  stars
  Fields:  ['GFM_Metallicity', 'GFM_StellarFormationTime', 'Masses']
@@ -109,5 +109,4 @@ To get the images you can use:
 >>> model.fit(n_components = 60, show_results = True)
 ```
 
-data 
 
