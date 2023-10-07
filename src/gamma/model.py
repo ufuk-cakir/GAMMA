@@ -1,4 +1,4 @@
-
+import h5py
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,6 +6,11 @@ from sklearn.decomposition import PCA
 from matplotlib.gridspec import GridSpec
 from .load import Gamma
 import pickle
+
+
+
+CMAPS = {"GFM_Metallicity": "magma", "GFM_StellarFormationTime": "gist_heat", "Masses": "cividis"}
+
 
 class mPCA():
     '''Class to perform a PCA on the data.
@@ -42,7 +47,7 @@ class mPCA():
         '''
         return x
     
-    def __init__(self,data, particle_type = None, norm_function = None, norm_function_kwargs=None, mask = None, dim=2):
+    def __init__(self,data, particle_type = None, norm_function = None, norm_function_kwargs={}, mask = None, dim=2):
         # Check if data is instance of Gamma
         if not isinstance(data, Gamma):
             raise ValueError("data must be an instance of Gamma")
@@ -104,32 +109,20 @@ class mPCA():
             image = self.data.get_image(self.particle_type, field, dim = dim)
             norm_params = self._norm_function_kwargs[field] if field in self._norm_function_kwargs.keys() else {}
             image = np.array([self._norm_function(img, **norm_params).flatten() for img in image])
-            
-            # Normalize the image
-           
-           # if self._norm_function is not None:
-                # Check if the norm function has arguments for the specified field
-           #     if field in self._norm_function_kwargs.keys():
-           #         image = self._norm_function(image, **self._norm_function_kwargs[field])
-           #     else:
-                    # If no arguments are specified, use the default arguments
-           #         image = self._norm_function(image)
-            # Add the image to the datamatrix
-            
             self.datamatrix = np.concatenate((self.datamatrix, image), axis=1)
          
         print("Created datamatrix with shape: ", self.datamatrix.shape)
         
         
         
-    def fit(self, n_components=None, show_results = True,random_sample_ratio = None, **kwargs):
+    def fit(self, n_components, show_results = True,random_sample_ratio = None, **kwargs):
         '''Fit the PCA to the datamatrix
         
         This function fits the PCA to the datamatrix. The scores, eigengalaxies and inverse_transformed_datamatrix are calculated and stored as attributes of the PCA object.
         
         Parameters:
         -----------
-        n_components : int, optional
+        n_components : int, 
             Number of components to keep. If None, all components are kept.
         show_results : bool, optional
             If True, the results of the PCA are shown.
@@ -156,7 +149,7 @@ class mPCA():
         if show_results:
             self.show_results()
             
-    def show_results(self, cmap ="gray", cmap_eigen = "RdBu_r", font_size_eigen=35):
+    def show_results(self, cmap ="gray", cmap_eigen = "RdGy_r", font_size_eigen=35):
         '''Show the results of the PCA'''
         fig, ax = plt.subplots(1, 2, figsize=(10, 5))
         ax[0].plot(self.pca.explained_variance_ratio_)
@@ -166,10 +159,7 @@ class mPCA():
         ax[1].set_xlabel("Component")
         ax[1].set_ylabel("Cumulative explained variance ratio")
         plt.show()
-        
-        field_length = len(self._IMG_ORDER) 
-        
-        
+                
         # Check if the image is 2D 
         if self._dim != "dim2":
             return
@@ -177,49 +167,121 @@ class mPCA():
         for index,field in enumerate(self._IMG_ORDER):
             self.show_eigengalaxies(field=field, cmap=cmap_eigen, font_size = font_size_eigen)  
         #Calculate residue of random galaxy
-        self.compare()
-    def show_eigengalaxies(self,field="GFM_Metallicity", cmap="RdBu_r", font_size = 25, save_path=None):
+        randomind = np.random.randint(0, self.datamatrix.shape[0])
+        self.compare(randomind)
+    def show_eigengalaxies(self,field="GFM_Metallicity", cmap=None, font_size = 25, save_path=None, n_rows = None, n_cols = None):
+        if cmap is None:
+            cmap = CMAPS[field]
         index = self._IMG_ORDER.index(field)
         eigen = self.get_eigengalaxies()[:, index]
-        mean = self.get_means()[index]
-        # Insert mean to beginning of eigen
-        eigen = np.insert(eigen, 0, mean, axis=0)
+    
         n_eigen = len(eigen) 
         
         # Calculate the optimal grid layout
-        n_rows = int(np.ceil(np.sqrt(n_eigen)))
-        n_cols = int(np.ceil(n_eigen / n_rows))
+        n_rows = int(np.ceil(np.sqrt(n_eigen))) if n_rows is None else n_rows
+        n_cols = int(np.ceil(n_eigen / n_rows)) if n_cols is None else n_cols
         
         figsize = (n_cols * 4, n_rows * 4)
         
         # Create the subplots using gridspec
         fig = plt.figure(figsize=figsize)
-        width_ratios = [1] * n_cols + [0.5]
-        gs = GridSpec(n_rows, n_cols+1, figure=fig,width_ratios=width_ratios)
+        # width_ratios = [1] * n_cols + [0.5]
+        width_ratios = [1] * n_cols 
+        # gs = GridSpec(n_rows, n_cols+1, figure=fig,width_ratios=width_ratios)
+        gs = GridSpec(n_rows, n_cols, figure=fig,width_ratios=width_ratios)
         
+        
+        vmin = np.min(eigen)
+        vmax = np.max(eigen)
         # Plot the eigengalaxies
         for i in range(n_eigen):
             ax = fig.add_subplot(gs[i])
-            if i == 0:
-                ax.set_title("Mean", fontsize=font_size)
-            else:
-                ax.set_title(i, fontsize=font_size)
-            im = ax.imshow(eigen[i], cmap=cmap)
+            ax.set_title(i+1, fontsize=font_size)
+            ax.imshow(eigen[i], cmap=cmap)
             ax.axis('off')
         
         # Add a colorbar using gridspec
-        cbar_ax = fig.add_subplot(gs[:, -1])
-        cbar = plt.colorbar(im, cax=cbar_ax)
-        cbar.set_label(field, fontsize=font_size)
-        cbar.ax.tick_params(labelsize=font_size)
+        # cbar_ax = fig.add_subplot(gs[:, -1])
+        # cbar = plt.colorbar(im, cax=cbar_ax)
+        # cbar.set_label(field, fontsize=font_size)
+        # cbar.ax.tick_params(labelsize=font_size)
         
         # Adjust spacing between subplots
         fig.tight_layout()
         if save_path is not None:
             plt.savefig(save_path,dpi = 300)
         # Display the plot
-        plt.show()        
-    def compare(self, index = None, cmap= "gray", savepath = None, show = True,n_eigen = None):
+        plt.show() 
+    
+    
+    
+    
+    
+    def compare(self,galindex, n_components=None, plot=True, cmap=None, 
+                savepath = None, show = True, labelsize=20,w_pad = 0.1,h_pad = 0.1, text_coords=(-32,32), figsize=(15,15)):
+        
+        if n_components is None:
+            n_components = len(self.eigengalaxies)
+        scores = self.scores
+        eigen= self.eigengalaxies
+        means = self.pca.mean_
+        
+        og = self.datamatrix[galindex].reshape(len(self._IMG_ORDER), *self._IMG_SHAPE)
+        score = scores[galindex][:n_components]
+        eig = eigen[:n_components].reshape(n_components, len(self._IMG_ORDER)*np.prod(self._IMG_SHAPE))
+        means = means.reshape(len(self._IMG_ORDER)*np.prod(self._IMG_SHAPE))
+        reconstructed = np.dot(score, eig) + means
+        reconstructed = reconstructed.reshape(3, 64, 64)
+        residue = og - reconstructed.reshape(3, 64, 64)
+
+        # Calculate the range for the residue images
+        residue_min = np.min(residue)
+        residue_max = np.max(residue)
+        fields = ["Metallicity", "Stellar Age", "Masses"]
+        if cmap is None:
+            cmap = {"Metallicity": "magma", "Stellar Age": "gist_heat", "Masses": "cividis"}
+        if plot:
+            fig = plt.figure(figsize=figsize)
+            gs = GridSpec(3, 4, width_ratios=[1, 1, 1, 0.1])  # Adjust width ratios to accommodate the colorbar
+
+            for i in range(3):
+                ax1 = fig.add_subplot(gs[i, 0])
+                ax1.imshow(og[i], cmap=cmap[fields[i]])
+                ax1.text(*text_coords, fields[i], fontsize=labelsize, verticalalignment='center', horizontalalignment='left')
+                ax1.axis("off")
+
+                ax2 = fig.add_subplot(gs[i, 1])
+                ax2.imshow(reconstructed[i], cmap=cmap[fields[i]])
+            
+                    
+                ax2.axis("off")
+
+                ax3 = fig.add_subplot(gs[i, 2])
+                im = ax3.imshow(residue[i], cmap="coolwarm", vmin=residue_min, vmax=residue_max)
+                
+                if i==0: 
+                    ax1.set_title(f"Original",fontsize=labelsize)
+                    ax2.set_title(f"Reconstructed", fontsize=labelsize)
+                    ax3.set_title(f"Residue", fontsize=labelsize)
+                
+                ax3.axis("off")
+
+            # Add a single colorbar on the right side
+            cax = fig.add_subplot(gs[:, 3])
+            cbar = plt.colorbar(im, cax=cax)
+            cbar.ax.tick_params(labelsize=10)
+            cbar.set_label("Residue", fontsize=labelsize)
+
+            plt.tight_layout(w_pad=w_pad,h_pad=h_pad)
+            
+            if savepath is not None:
+                plt.savefig(savepath, dpi=300, bbox_inches='tight')
+            if show: plt.show()
+
+        return reconstructed, og
+    
+           
+    def _compare(self, index = None, savepath = None, show = True,n_eigen = None):
         '''Compare a galaxy with its reconstruction
         
         This function compares a galaxy with its reconstruction. If no index is specified, a random galaxy is chosen.
@@ -229,6 +291,7 @@ class mPCA():
         index : int, optional
             Index of the galaxy to compare. If None, a random galaxy is chosen.
         '''
+        return
         field_length = len(self._IMG_ORDER)
         #Calculate residue of random galaxy
         if index is None:
@@ -336,7 +399,56 @@ class mPCA():
             return self.datamatrix.reshape(len(self.datamatrix),len(self._IMG_ORDER), *self._IMG_SHAPE)
         else:
             return self.datamatrix[index].reshape(len(self._IMG_ORDER), *self._IMG_SHAPE)
+     
+    def show_random_galaxies(self,index = None, font_size = 20):
+        '''Show a grid of random galaxies
         
+        This function shows a 3x3 grid of random galaxies in all three fields. If no indices are specified, random indices are chosen.
+        
+        Parameters:
+        -----------
+        indices : list, optional
+            List of indices of the galaxies to show. Needs to have a length of 3, If None, random indices are chosen.
+        font_size : int, optional
+            Font size of the titles of the subplots.
+        '''
+        # Set up the figure and subplots
+        fig, axs = plt.subplots(3, 3, figsize=(10, 10))
+
+        if index is None:
+        # Generate random indices for selecting images
+            index = np.random.choice(len(self.datamatrix), size=3, replace=False)
+        else:
+            if len(index) != 3:
+                raise ValueError("indices must have a length of 3")
+        #random_indices = [5794,7581,17]
+        random_samples = self.datamatrix[index].reshape(3, len(self._IMG_ORDER), *self._IMG_SHAPE)
+
+        fields = self._IMG_ORDER
+        # Iterate over the grid
+        for i in range(3):
+            for j in range(3):
+                # Get the random index
+                # Plot the original image
+                axs[i, j].imshow(random_samples[i, j], cmap=CMAPS[fields[j]])
+                axs[i, j].set_xticks([])
+                axs[i, j].set_yticks([])
+                if i == 0:
+                    axs[i, j].set_title(fields[j], fontsize=font_size)
+                
+
+        # Adjust the spacing between subplots
+        plt.tight_layout(w_pad=0.0, h_pad=0.0)
+
+        # plt.savefig("sample_galaxies.pdf", bbox_inches='tight')
+        # Show the grid image
+        plt.show()   
+        
+    def get_explained_variance_ratio(self):
+        '''Return the explained variance ratio'''
+        return self.pca.explained_variance_ratio_
+
+
     def save(self, path):
         '''Save the PCA
         
