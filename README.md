@@ -8,6 +8,12 @@ The dataset offers detailed 2D maps and 3D cubes of 11 727 galaxies, capturing e
 
 *Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
+![sample2d](paper/sample_galaxies-1.png)
+![sample3d](paper/galaxy_grid-1.png)
+*Figure 1: Sample Galaxies in 2D (top) and 3D (bottom)*
+
+
+
 ## Table of Contents
 1. [Download Dataset](#download-dataset)
 2. [Installation](#installation)
@@ -109,4 +115,4 @@ Creating datamatrix with the following fields:
 >>> model.fit(n_components = 60, show_results = True)
 ```
 
-
+For more results, check the [benchmark page](paper/results.md).
