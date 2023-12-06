@@ -16,7 +16,11 @@ _Figure 2: Left: Cumulative explained variance ratio (EVR) for up to 400 eigenga
 
 ## Reconstruction Error
 We define the reconstruction error (RE) as the fractional difference in pixel values between the PCA representation, $\hat{\mathbf{I}}$, and the original image, $\mathbf{I}$ as 
-$$\text{RE} = \frac{\sum_{k=1}^{d} (I_k-\hat{I}_k)^2}{\sum_{k=1}^{d} I_k}$$
+
+```math
+\text{RE} = \frac{\sum(I_k-\hat{I}_k)^2}{\sum I_k}
+```
+where we sum over all pixel values.
 
 ![RE](RE_90expl_variance-1.png)
 _Figure 3: Reconstruction error (RE) for fixed-dimensionality reduction on 60 (215) eigengalaxies in 2D (3D). The dashedline represents the 90% quantile. Impressively, 90% of all images exhibit a RE below 0.022 (0.027)._
