@@ -27,3 +27,14 @@ _Figure 3: Reconstruction error (RE) for fixed-dimensionality reduction on 60 (2
 
 ![RE_90](90th_percentile_RE-1.png)
 _Figure 4: 90th percentile of RE as a function of the number of eigengalaxies. Reconstruction is a strong function of eigengalaxies, and already 15 (60) eigengalaxies lead to a RE better than 5% in 2D (3D)._
+
+
+# Applications
+## Nearest Neighbors
+We calculate the Nearest Neighbors in Euclidean distance in the lower dimensional Image space. The Nearest Neighbors are shown below for the 2D case, they are ordered by their distance to the query galaxy.
+![NN](NN_elliptical-1.png)
+![NN_2](NN_spiral-1.png)
+_Figure 5: Nearest Neighbors in 2D for an elliptical (left) and a spiral (right) galaxy. The query galaxy is shown in the top left corner._
+
+## Morphological Decomposition
+We show the eigengalaxies that contribute most to the reconstruction of the query galaxy. The eigengalaxies are ordered by their contribution to the reconstruction.
