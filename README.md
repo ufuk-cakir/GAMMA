@@ -1,10 +1,12 @@
 [![DOI](https://zenodo.org/badge/695622710.svg)](https://zenodo.org/badge/latestdoi/695622710)
+[![arXiv](https://img.shields.io/badge/arXiv-2312.06016-b31b1b.svg)](https://arxiv.org/abs/2312.06016)
 ![Logo](gamma_logo_v3.png)
 # Galactic Attributes of Mass, Metallicity, and Age
 
 This project, developed by Ufuk Çakır, introduces the code to generate the GAMMA (Galactic Attributes of Mass, Metallicity, and Age) dataset, a comprehensive collection of galaxy data tailored for Machine Learning applications. 
 The dataset offers detailed 2D maps and 3D cubes of 11 727 galaxies, capturing essential attributes: stellar age, metallicity, and mass. Ideal for feature extraction, clustering, and regression tasks, GAMMA offers a unique lens for exploring galactic structures through computational methods and is a bridge between astrophysical simulations and the field of scientific machine learning (ML)
 
+The full paper is available on [arXiv](https://arxiv.org/abs/2312.06016)!
 
 *Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
