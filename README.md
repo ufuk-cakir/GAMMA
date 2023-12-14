@@ -1,5 +1,7 @@
 [![DOI](https://zenodo.org/badge/695622710.svg)](https://zenodo.org/badge/latestdoi/695622710)
 [![arXiv](https://img.shields.io/badge/arXiv-2312.06016-b31b1b.svg)](https://arxiv.org/abs/2312.06016)
+[![docs](https://readthedocs.org/projects/gamma-dataset/badge/?version=latest)](https://gamma-dataset.readthedocs.io/en/latest/)
+
 ![Logo](gamma_logo_v3.png)
 # Galactic Attributes of Mass, Metallicity, and Age
 
