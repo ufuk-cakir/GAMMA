@@ -12,6 +12,19 @@ The full paper is available on [arXiv](https://arxiv.org/abs/2312.06016)!
 
 *Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, 09/2023*
 
+> **⚠️ Warning:**
+> If you want to use this code or dataset in your research, please cite the following paper:
+> 
+> @misc{çakır2023,
+> &nbsp;&nbsp;&nbsp;&nbsp;title={GAMMA: Galactic Attributes of Mass, Metallicity, and Age Dataset},  
+> &nbsp;&nbsp;&nbsp;&nbsp;author={Ufuk Çakır and Tobias Buck},  
+> &nbsp;&nbsp;&nbsp;&nbsp;year={2023},  
+> &nbsp;&nbsp;&nbsp;&nbsp;eprint={2312.06016},  
+> &nbsp;&nbsp;&nbsp;&nbsp;archivePrefix={arXiv},  
+> &nbsp;&nbsp;&nbsp;&nbsp;primaryClass={astro-ph.GA},  
+> &nbsp;&nbsp;&nbsp;&nbsp;url={https://arxiv.org/abs/2312.06016},  
+> }
+> 
 ![sample2d](paper/sample_galaxies-1.png)
 ![sample3d](paper/galaxy_grid-1.png)
 *Figure 1: Sample Galaxies in 2D (top) and 3D (bottom)*
